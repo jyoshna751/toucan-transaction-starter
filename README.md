@@ -22,30 +22,48 @@ The application supports four operations:
 - MockMvc
 - Jakarta Bean Validation
 
-## *Project Structure*
+## Project Structure
 ```text
-src/main/java/com/example/transactionstarter/
+src/
+├── main/
+│   ├── java/
+│   │   └── com.example.transactionstarter/
+│   │       ├── TransactionStarterApplication.java
+│   │       └── transaction/
+│   │           ├── controller/
+│   │           │   └── TransactionController.java
+│   │           ├── dto/
+│   │           │   ├── CreateTransactionRequest.java
+│   │           │   └── UpdateStatusRequest.java
+│   │           ├── entity/
+│   │           │   └── Transaction.java
+│   │           ├── enums/
+│   │           │   ├── TransactionStatus.java
+│   │           │   └── TransactionType.java
+│   │           ├── exception/
+│   │           │   ├── DuplicateTransactionException.java
+│   │           │   ├── ErrorResponse.java
+│   │           │   ├── GlobalExceptionHandler.java
+│   │           │   ├── InvalidTransactionException.java
+│   │           │   └── TransactionNotFoundException.java
+│   │           ├── repository/
+│   │           │   └── TransactionRepository.java
+│   │           └── service/
+│   │               └── TransactionService.java
+│   │
+│   └── resources/
+│       └── application.yml
 │
-├── TransactionStarterApplication.java
-│
-└── transaction/
-    ├── controller/
-    │   └── TransactionController.java
-    ├── entity/
-    │   └── Transaction.java
-    ├── enums/
-    │   ├── TransactionStatus.java
-    │   └── TransactionType.java
-    ├── exception/
-    │   ├── DuplicateTransactionException.java
-    │   ├── TransactionNotFoundException.java
-    │   └── GlobalExceptionHandler.java
-    ├── repository/
-    │   └── TransactionRepository.java
-    └── service/
-        └── TransactionService.java
+└── test/
+    └── java/
+        └── com.example.transactionstarter/
+            ├── TransactionStarterApplicationTests.java
+            └── transaction/
+                └── controller/
+                    └── TransactionControllerTest.java
 
 Tests are located under:src/test/java/com/example/transactionstarter/
+```
 
 
 ## *Transaction Fields*
@@ -58,7 +76,7 @@ transactionType - type of transaction
 status - current transaction status
 
 Example:
-
+```text
 {
   "transactionId": "TXN100",
   "customerId": "CUST100",
@@ -67,6 +85,7 @@ Example:
   "transactionType": "PAYMENT",
   "status": "PENDING"
 }
+```
 transactionType and status are represented using Java enums.
 A newly created transaction always starts with PENDING status.
 
@@ -87,6 +106,7 @@ POST /api/transactions
 Content-Type: application/json
 
 Request body:
+```text
 
 {
   "transactionId": "TXN100",
@@ -95,8 +115,11 @@ Request body:
   "currency": "INR",
   "transactionType": "PAYMENT"
 }
+```
 Successful Response
 201 Created
+
+```text
 {
   "transactionId": "TXN100",
   "customerId": "CUST100",
@@ -105,6 +128,7 @@ Successful Response
   "transactionType": "PAYMENT",
   "status": "PENDING"
 }
+```
 
 The status is set to PENDING by the application when the transaction is created.
 
@@ -113,6 +137,7 @@ Request:
 GET /api/transactions/TXN100
 Successful Response
 200 OK
+```text
 {
   "transactionId": "TXN100",
   "customerId": "CUST100",
@@ -121,7 +146,7 @@ Successful Response
   "transactionType": "PAYMENT",
   "status": "PENDING"
 }
-
+```
 If the transaction does not exist:404 Not Found
 
 *3. Update Transaction Status*
@@ -130,12 +155,14 @@ PATCH /api/transactions/TXN100/status
 Content-Type: application/json
 
 Request body:
-
+```text
 {
   "status": "COMPLETED"
 }
+```
 Successful Response
 200 OK
+```text
 {
   "transactionId": "TXN100",
   "customerId": "CUST100",
@@ -144,6 +171,7 @@ Successful Response
   "transactionType": "PAYMENT",
   "status": "COMPLETED"
 }
+```
 
 The transaction must exist before its status can be updated.
 
@@ -152,6 +180,7 @@ Request:
 GET /api/customers/CUST100/transactions
 Successful Response
 200 OK
+```text
 [
   {
     "transactionId": "TXN100",
@@ -170,6 +199,7 @@ Successful Response
     "status": "PENDING"
   }
 ]
+```
 The endpoint returns all transactions belonging to the given customer.
 
 
@@ -188,11 +218,11 @@ The endpoint returns all transactions belonging to the given customer.
     Must not be greater than 100000
 
 For example:
-
+```text
 {
   "amount": 150000
 }
-
+```
 is rejected with:400 Bad Request
 4.Currency
     Required
@@ -223,10 +253,15 @@ If it is not found:404 Not Found
 ## *HTTP Status Codes*
 
 200 OK--->Request completed successfully
+
 201 Created--->	Transaction created successfully
+
 400 Bad Request--->	Invalid input or validation failure
+
 404 Not Found--->	Transaction does not exist
+
 409 Conflict--->	Transaction ID already exists
+
 500 Internal Server Error--->	Unexpected server error
 
 Business exceptions are handled using a global exception handler.
@@ -248,17 +283,17 @@ Repository
 H2 Database
 
 
-*Controller:*Handles HTTP requests and returns HTTP responses.
+Controller:Handles HTTP requests and returns HTTP responses.
 
-*Service:*Contains the main transaction logic and business validations.
+Service:Contains the main transaction logic and business validations.
 
-*Repository:*Uses Spring Data JPA to interact with the database.
+Repository:Uses Spring Data JPA to interact with the database.
 
-*Entity:*Represents a transaction in the database.
+Entity:Represents a transaction in the database.
 
-*Enums:*Used for transaction type and transaction status.
+Enums:Used for transaction type and transaction status.
 
-*Exception Handler:*Handles application exceptions and converts them into appropriate HTTP status codes.
+Exception Handler:Handles application exceptions and converts them into appropriate HTTP status codes.
 
 ## *Database*
 
@@ -323,12 +358,12 @@ H2 database
 
 I also tested the running application using PowerShell.
 Example, the sample endpoint was verified using:
-
+```text
 Invoke-WebRequest `
     -Uri "http://localhost:8082/api/sample" `
     -Method GET `
     -UseBasicParsing
-
+```
 The response was:StatusCode : 200
 The transaction APIs were also tested during development.
 
@@ -348,13 +383,13 @@ During development, one test initially expected a duplicate Transaction ID to re
 I also tested the application manually and ran the complete automated test suite to verify the final result.
 
 ## *Final test result:*
-
+```text
 Tests run: 8
 Failures: 0
 Errors: 0
 Skipped: 0
 BUILD SUCCESS
-
+```
 
 ## *Final Verification*
 
