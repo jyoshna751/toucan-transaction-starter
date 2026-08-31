@@ -23,6 +23,7 @@ The application supports four operations:
 - Jakarta Bean Validation
 
 ## *Project Structure*
+```text
 src/main/java/com/example/transactionstarter/
 │
 ├── TransactionStarterApplication.java
