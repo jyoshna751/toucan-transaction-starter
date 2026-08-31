@@ -327,7 +327,7 @@ If the port is already in use, another available port can be used.
 
 ## *Running Tests*
 
-From the directory containing pom.xml, run:.\mvnw.cmd clean test
+From the directory containing pom.xml, run: .\mvnw.cmd clean test
 
 The project was successfully tested with the following result:
 
@@ -376,11 +376,17 @@ The transaction APIs were also tested during development.
 
 ## *Final test result:*
 ```text
-Tests run: 8
-Failures: 0
-Errors: 0
-Skipped: 0
-BUILD SUCCESS
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  20.549 s
+[INFO] Finished at: 2026-08-31T21:49:07+05:30
+[INFO] ------------------------------------------------------------------------
 ```
 
 ## *Final Verification*
