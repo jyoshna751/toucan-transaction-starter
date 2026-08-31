@@ -94,9 +94,13 @@ A newly created transaction always starts with PENDING status.
 ## *API Endpoints*
 
 GET-api/sample--Sample endpoint from the starter project
+
 POST-api/transactions--Create a transaction
+
 GET-api/transactions/{transactionId}--Get a transaction
+
 PATCH-api/transactions/{transactionId}/status--Update transaction status
+
 GET-api/customers/{customerId}/transactions--Get all transactions for a customer
 
 
@@ -343,6 +347,7 @@ Create a transaction
 Get a transaction
 Update transaction status
 Get transactions for a customer
+
 *2.Error cases*
 Reject transaction when amount is greater than 100000
 Reject duplicate Transaction ID
@@ -368,19 +373,6 @@ The response was:StatusCode : 200
 The transaction APIs were also tested during development.
 
 
-## *AI Usage Disclosure*
-
-AI tools were used during development, as permitted by the challenge.
-
-Understanding the requirements
-Reviewing validation and exception-handling approaches
-Checking test scenarios
-Troubleshooting Maven and Spring Boot issues
-
-I did not treat the generated suggestions as final without checking them.
-During development, one test initially expected a duplicate Transaction ID to return 400, while the implementation returned 409. I reviewed the requirement and chose 409 Conflict for the duplicate resource case. The test was then updated to match the chosen API contract.
-
-I also tested the application manually and ran the complete automated test suite to verify the final result.
 
 ## *Final test result:*
 ```text
